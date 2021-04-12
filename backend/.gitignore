@@ -1,4 +1,8 @@
 .DS_Store
+*.DS_Store
+backend/*.DS_Store
+backend/src/*.DS_Store
+
 
 # Logs
 logs

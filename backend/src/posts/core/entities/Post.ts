@@ -1,4 +1,5 @@
-import { Identifier } from "../../../shared/core/valueObjects/Identifier";
+import { Identifier } from "../../../shared/common/core/valueObjects/Identifier";
+import { Image } from "../../../shared/images/core/entities/Image";
 import { Approbation } from "../valueObjects/Approbation";
 
 export class Post {
@@ -12,12 +13,14 @@ export class Post {
 
     constructor(
         private id: Identifier,
-        private approbation: Approbation
+        private approbation: Approbation,
+        private title: string,
+        private description: string,
+        private images: Image[]
     ) {}
 
-    public static Create(id: string): Post {
-        const identifier: Identifier = new Identifier(id);
+    public static Create(id: Identifier, title: string, description: string, imgaes: Image[]): Post {
         const approbation: Approbation = new Approbation(false);
-        return new Post(identifier, approbation);
+        return new Post(id, approbation, title, description, imgaes);
     }
 }

@@ -16,11 +16,15 @@ export class Post {
         private approbation: Approbation,
         private title: string,
         private description: string,
-        private images: Image[]
+        private images: Image[],
+        private comments: string[],
+        private creationDate: Date
     ) {}
 
     public static Create(id: Identifier, title: string, description: string, imgaes: Image[]): Post {
         const approbation: Approbation = new Approbation(false);
-        return new Post(id, approbation, title, description, imgaes);
+        const comments: string[] = [];
+        const today: Date = new Date();
+        return new Post(id, approbation, title, description, imgaes, comments, today);
     }
 }

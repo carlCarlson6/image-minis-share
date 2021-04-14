@@ -29,11 +29,10 @@ export class PostCreator {
         const commnad: UploadImageCommand = new UploadImageCommand(imageId.Value, imageBytes.Value);
         await this.ServiceBus.Dispatch<UploadImageCommand, void>(commnad);
         
-        const query: RetrieveImageQuery = {}
+        const query: RetrieveImageQuery = new RetrieveImageQuery(imageId.Value);
         const uploadedImage = await this.ServiceBus.Dispatch<RetrieveImageQuery, UploadedImage>(query)
         const url: Url = parse(uploadedImage.url, false)
 
         return new Image(imageId, url);
     }
-
 }

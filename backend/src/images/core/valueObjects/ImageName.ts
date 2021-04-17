@@ -9,8 +9,9 @@ export class ImageName {
     }
 
     constructor(
-        readonly imageExtension: string
+        identifier: string,
+        private readonly imageExtension: string
     ) {
-        this.id = Identifier.Create();
+        this.id = new Identifier(identifier);
     }
 }

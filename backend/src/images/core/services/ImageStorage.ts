@@ -1,4 +1,3 @@
-import { Image } from "../../../shared/images/core/entities/Image";
 import { ImageBytes } from "../../../shared/images/core/valueObjects/ImageBytes";
 import { ImageName } from "../valueObjects/ImageName";
 

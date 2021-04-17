@@ -4,12 +4,15 @@ import { ImageBytes } from "../../../shared/images/core/valueObjects/ImageBytes"
 import { ImageStorageError } from "../../core/errors/ImageStorageError";
 import { ImageStorage } from "../../core/services/ImageStorage";
 import { ImageName } from "../../core/valueObjects/ImageName";
+import { AzureBlobContainerFactory } from "./AzureBlobContainerFactory";
 
 export class AzureBlobImageStorage implements ImageStorage {
-
     private readonly imageContainer: ContainerClient;
 
-    constructor() {}
+    constructor(sharedAccessSignature: string, accountName: string, containerName: string) {
+        const containerFactory: AzureBlobContainerFactory = new AzureBlobContainerFactory(sharedAccessSignature, accountName); 
+        this.imageContainer = containerFactory.GetContainer(containerName);
+    }
 
     public async Upload(imageName: ImageName, imageBytes: ImageBytes): Promise<void> {
         const imageBlob: BlockBlobClient = this.imageContainer.getBlockBlobClient(imageName.Value);

@@ -1,3 +1,4 @@
 export const nameOf = (object: Object): string => {
-    return object.constructor.name;
+    const nameOfObject: string = object.constructor.name;
+    return nameOfObject;
 }

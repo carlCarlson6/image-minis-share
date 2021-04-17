@@ -1,9 +1,8 @@
-import { Url } from "url";
-import { Identifier } from "../../../common/core/valueObjects/Identifier";
+import { ImageName } from "../../../../images/core/valueObjects/ImageName";
 
 export class Image {
     constructor(
-        readonly Id: Identifier,
-        readonly Url: Url
+        readonly Name: ImageName,
+        readonly Url: URL
     ) {}
 }

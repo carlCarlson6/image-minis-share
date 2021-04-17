@@ -1,5 +1,5 @@
 import { v4 as uuidv4, validate as validateUuidv4 } from "uuid";
-import { InvalidIndentifier } from "../errors/InvalidIdentifier";
+import { InvalidIndentifier } from "../errors/InvalidIndentifier";
 
 export class Identifier {    
     public readonly Value: string;

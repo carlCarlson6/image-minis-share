@@ -15,24 +15,27 @@ export class PostCreator {
         private readonly Repository: PostsRepository
     ) {}
 
-    public async Execute(id: Identifier, title: string, description: string, imagesBytes: ImageBytes[]): Promise<void> {
-        const images: Image[] = await Promise.all(imagesBytes.map(async (imageBytes): Promise<Image> => this.UploadImage(imageBytes)));
+    public async Execute(id: Identifier, title: string, description: string, imagesBytes: ImageBytes[], imageExtension: string): Promise<void> {
+        const images: Image[] = await Promise.all(
+            imagesBytes.map(async (imageBytes): Promise<Image> => this.UploadImage(imageBytes, imageExtension))
+        );
         
         const post: Post = Post.Create(id, title, description, images);
         
         await this.Repository.Save(post);
     }
 
-    private async UploadImage(imageBytes: ImageBytes): Promise<Image> {
+    private async UploadImage(imageBytes: ImageBytes, imageExtension: string): Promise<Image> {
         const imageId: Identifier = Identifier.Create();
 
-        const commnad: UploadImageCommand = new UploadImageCommand(imageId.Value, imageBytes.Value);
+        const commnad: UploadImageCommand = new UploadImageCommand(imageId.Value, imageBytes.Value, imageExtension);
         await this.ServiceBus.Dispatch<UploadImageCommand, void>(commnad);
         
         const query: RetrieveImageQuery = new RetrieveImageQuery(imageId.Value);
         const uploadedImage = await this.ServiceBus.Dispatch<RetrieveImageQuery, UploadedImage>(query)
         const url: Url = parse(uploadedImage.url, false)
 
-        return new Image(imageId, url);
+        throw new Error();
+        //return new Image(imageId, url);
     }
 }
